@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Approval Process</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <style>
+        .el-row{
+            padding-bottom: 5px;
+        }
+        .el-header{
+            height: 80px;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div>
+                    <el-row>
+                        <el-col :span="6">
+                            <span>Status</span>
+                            <el-select v-model="status" style="height: 40px; width: 150px;">
+                                <el-option label="ToDO" value="ToDO"></el-option>
+                                <el-option label="Done" value="Done"></el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="12">
+                            <span>ProuductID</span>
+                            <el-select v-model="prouductId" style="height: 40px; width: 200px;">
+                                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                    :value="item.value"></el-option>
+                            </el-select>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-button type="primary" round size="small">Get Default</el-button>
+                        <el-button type="primary" round size="small">Add Step</el-button>
+                        <el-button type="primary" round size="small">Submit</el-button>
+                        <el-button type="primary" round size="small">Save As Default</el-button>
+                    </el-row>
+                </div>
+            </el-header>
+            <el-main>
+                <div>
+                    <template>
+                        <el-tabs v-model="editableTabsValue" type="card">
+                            <el-tab-pane v-for="(item,index) in eidtableTabs" :key="item.name" :label="item.title"
+                                :name="item.name">
+                                <template>
+                                    <el-table :data="tabledata" ref="multipleTable" style="width: 100%"
+                                        @selection-change="handleSelectionChange">
+                                        <el-table-column type="selection" width="60"></el-table-column>
+                                        <el-table-column type="index" label="SeqNo" width="150"></el-table-column>
+                                        <el-table-column prop="AssigoGroups" label="AssigoGroups"></el-table-column>
+                                        <el-table-column prop="Save" label="Save"></el-table-column>
+                                        <el-table-column prop="delete" label="delete"></el-table-column>
+                                    </el-table>
+                                </template>
+                                <el-pagination @size-change="handleSizeChange" @current-change="handelCurrentChange"
+                                    :current-page.sync="currentPage" :page-size="100" layout="prev,pager,next,jumper"
+                                    :total="1000">
+                                </el-pagination>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </template>
+                </div>
+            </el-main>
+        </el-container>
+    </div>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    prouductId:'',
+                    status:'',
+                    currentPage: 1,
+                    editableTabsValue: 'PROD',
+                    multipleSelection: [],
+                    options: [{
+                        value: '选项1',
+                        label: '2391A-01'
+                    }, {
+                        value: '选项2',
+                        label: '2391A-02'
+                    }, {
+                        value: '选项3',
+                        label: '2391A-03'
+                    }, {
+                        value: '选项4',
+                        label: '2391A-04'
+                    }, {
+                        value: '选项5',
+                        label: '2391A-05'
+                    },],
+                    eidtableTabs: [{
+                        title: 'PROD',
+                        name: 'PROD',
+                        url: '',
+                        content: 'Tab 1 content'
+                    }, {
+                        title: 'STR',
+                        name: 'STR',
+                        url: '',
+                        content: 'Tab 2 content'
+                    }, {
+                        title: 'CORR',
+                        name: 'CORR',
+                        url: '',
+                        content: 'Tab 3 content'
+                    }, {
+                        title: 'Prober',
+                        name: 'Prober',
+                        url: '',
+                        content: 'Tab 4 content'
+                    }, {
+                        title: 'Hardware',
+                        name: 'Hardware',
+                        url: '',
+                        content: 'Tab 5 content'
+                    }],
+                    tabledata: [{
+                        AssigoGroups: 'Group1',
+                        Save: 'Edit',
+                        delete: 'Delete',
+                    }, {
+                        AssigoGroups: 'Group2',
+                        Save: 'Edit',
+                        delete: 'Delete',
+                    }, {
+                        AssigoGroups: 'Group3',
+                        Save: 'Edit',
+                        delete: 'Delete',
+                    }],
+                }
+            },
+            methods: {
+                handleSelectionChange(val) {
+                    this.multipleSelection = val;
+                },
+                handleSizeChange(val) {
+                    console.log(`每页${val}条`)
+                },
+                handelCurrentChange() {
+                    console.log(`当前页${val}`)
+
+                },
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount("#app")
+    </script>
+</body>
+
+</html>

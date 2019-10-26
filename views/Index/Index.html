@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <style>
+        .el-header {
+            background-color: rgb(40, 142, 245);
+            color: rgb(245, 240, 240);
+            height: 50px !important;
+            line-height: 60px;
+        }
+
+        .el-tabs__nav .el-tabs__item:nth-child(1) span {
+            display: none;
+        }
+
+        /* 第一个菜单对应Tabs不能关闭 */
+
+        .el-menu-vertical:not(.el-menu--collapse) {
+            width: 250px;
+            min-height: 400px;
+        }
+
+        .el-dropdown-link {
+            margin-left: 40px;
+            color: #FFFFFF;
+        }
+
+        .el-main {
+            padding: 12px;
+        }
+
+        body {
+            height: 90%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            line-height: 12px;
+            font: 12px Helvetica Neue, Helvetica, PingFang SC, \5FAE\8F6F\96C5\9ED1, Tahoma, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            min-width: 320px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header style="text-align: left;font-size: 20px">
+                <span>RMS Client</span>
+                <el-button type="primary" v-on:click="hideMenu" icon="el-icon-menu"></el-button>
+                <el-dropdown style="float: right;color: #FFFFFF">
+                    <span class="el-icon-dropdown-link">
+                        LI-admin<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item><i class="el-icon-setting"></i>修改密码</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-header>
+
+            <el-container>
+                <el-menu class="el-menu-vertical" @open="handleopen" @close="handleclose" :collapse="isCollapse"
+                    :unique-opened="true">
+                    <template v-for="(item,index) in menuList">
+                        <el-submenu :index=item.ID v-if="item.isConctent">
+                            <template slot="title">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">{{item.name}}</span>
+                            </template>
+                            <template v-for="(item2,index) in item.list">
+                                <el-menu-item :index=item2.name v-on:click="addTab(item2.url,item2.name)">
+                                    <template slot="title">
+                                        <i class="el-icon-menu"></i>
+                                        <span slot="title">{{item2.name}}</span>
+                                    </template>
+                                </el-menu-item>
+                            </template>
+                        </el-submenu>
+                        <el-menu-item v-else :index=item.name v-on:click="addTab(item.url,item.name)">
+                            <template slot="title">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">{{item.name}}</span>
+                            </template>
+                        </el-menu-item>
+                    </template>
+                </el-menu>
+                <el-container>
+                    <el-main>
+                        <el-tabs v-model="editableTabsValue2" type="card" editable @edit="handleTabsEdit">
+                            <el-tab-pane v-for="(item, index) in editableTabs" :key="item.name" :label="item.title"
+                                :name="item.name">
+                                <iframe id="myiframe" :src=item.url style="width:100%;"></iframe>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </el-main>
+
+                    <el-footer>
+                        <el-row style="margin:0px auto;border-top:1px solid #a9a9a9;">
+                            <el-col :span="16" :offset="4">
+                                <div class="footer_content" style="height:40px ;width:400px margin-top：5px">
+                                    <span @click="skip('index')">首页</span>
+                                    <span @click="skip('product')">产品</span>
+                                    <span @click="skip('tech')">核心技术</span>
+                                    <span @click="skip('help')">帮助中心</span>
+                                    <span @click="skip('aboutus')">关于我们</span>
+                                    <p>苏ICP备13122256号-1</p>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </el-footer>
+                </el-container>
+            </el-container>
+        </el-container>
+    </div>
+    <script>
+        // reSetSize();
+        // window.onresize = reSetSize;
+        // function reSetSize() {
+        //     var windowsHeight = window.innerHeight;
+        //     document.getElementById("myiframe").style.height = (windowsHeight - 130) + "px";
+        // }
+    </script>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    isCollapse: false,
+                    editableTabsValue2: 'Group Management',
+                    menuList: [{
+                        ID: '1',
+                        name: 'Group Management',
+                        url: '../UserGroupManage/UserGroupManage.html',
+                        isConctent: true,
+                        list: [{
+                            ID: '1-1',
+                            name: 'UserManager',
+                            url: '../UserManage/UserManage.html',
+                            isConctent: false,
+                        }, {
+                            ID: '1-2',
+                            name: 'Supervisor',
+                            url: '../AssignDispatcher/AssignDispatcher.html',
+                            isConctent: false,
+                        }, {
+                            ID: '1-3',
+                            name: 'AuthorityView',
+                            url: '../AuthorityView/AuthorityView.html',
+                            isConctent: false,
+                        }]
+                    }, {
+                        ID: '2',
+                        name: 'Maintain',
+                        url: './login.html',
+                        isConctent: true,
+                        list: [{
+                            ID: '2-1',
+                            name: 'EQP Synchronize',
+                            url: '../EQP Synchronize/EQPSynchronize.html',
+                            isConctent: false,
+                        }, {
+                            ID: '2-2',
+                            name: 'FTP manager',
+                            url: '../FTP Manager/FTPManager.html',
+                            isConctent: false,
+                        }, {
+                            ID: '2-3',
+                            name: 'Parameters Maintain',
+                            url: '../Parameters Maintain/ParametersMaintain.html',
+                            isConctent: false,
+                        }, {
+                            ID: '2-4',
+                            name: 'Params Permission',
+                            url: '../Params Permission/ParamsPermission.html',
+                            isConctent: false,
+                        }, {
+                            ID: '2-5',
+                            name: 'Approval Process',
+                            url: '../Approval Process/ApprovalProcess.html',
+                            isConctent: false,
+                        }]
+                    }, {
+                        ID: '3',
+                        name: 'Recipe Management',
+                        url: './Test.html',
+                        isConctent: true,
+                        list: [{
+                            ID: '3-1',
+                            name: 'Recip List',
+                            url: '',
+                            isConctent: false,
+                        }, {
+                            ID: '3-2',
+                            name: 'RecipeModeSwictch',
+                            url: '',
+                            isConctent: false,
+                        }, {
+                            ID: '3-3',
+                            name: 'Recipe Confirm',
+                            url: '',
+                            isConctent: false,
+                        }, {
+                            ID: '3-4',
+                            name: 'Recipe Compare',
+                            url: '',
+                            isConctent: false,
+                        }]
+                    }, {
+                        ID: '4',
+                        name: 'WaferMap',
+                        url: './Test.html',
+                        isConctent: true,
+                        list: [{
+                            ID: '5-1',
+                            name: 'WaferMap',
+                            url: '',
+                            isConctent: false,
+                        }]
+                    }, {
+                        ID: '5',
+                        name: 'History',
+                        url: './Test.html',
+                        isConctent: true,
+                        list: [{
+                            ID: '5-1',
+                            name: 'Operation History',
+                            url: '',
+                            isConctent: false,
+                        }, {
+                            ID: '5-2',
+                            name: 'Lot History',
+                            url: '',
+                            isConctent: false,
+                        }]
+                    }, {
+                        ID: '6',
+                        name: 'Help',
+                        url: './Test.html',
+                        isConctent: true,
+                        list: [{
+                            ID: '6-1',
+                            name: 'Recip List',
+                            url: '',
+                            isConctent: false,
+                        }]
+                    }],
+                    editableTabs: [{
+                        title: 'Group Management',
+                        name: 'Group Management',
+                        url: '../UserGroupManage/UserGroupManage.html',
+                        content: 'Tab 1 content'
+                    },],
+                };
+            },
+            created() {
+                var windowsHeight = window.innerHeight;
+                document.getElementById("myiframe").style.height = (windowsHeight - 130) + "px";
+            },
+            methods: {
+                hideMenu() {
+                    this.isCollapse = !this.isCollapse;
+                },
+
+                addTab(url, name) {
+                    for (var i = 0; i < this.editableTabs.length; i++) {
+                        if (this.editableTabs[i].name == name) {
+                            return;
+                        }
+                    }
+                    let newTabName = ++this.tabIndex + '';
+                    this.editableTabs.push({
+                        title: name,
+                        name: name,
+                        url: url,
+                        content: ""
+                    });
+                    this.editableTabsValue2 = name;
+                },
+                handleopen(key, keyPath) {
+                    console.log(key, keyPath);
+                },
+                handleclose(key, keyPath) {
+                    console.log(key, keyPath);
+                },
+
+                handleTabsEdit(targetName, action) {
+                    let tabs = this.editableTabs;
+                    let activeName = this.editableTabsValue2;
+                    if (activeName === targetName) {
+                        tabs.forEach((tab, index) => {
+                            if (tab.name === targetName) {
+                                let nextTab = tabs[index + 1] || tabs[index - 1];
+                                if (nextTab) {
+                                    activeName = nextTab.name;
+                                }
+                            }
+                        });
+                    }
+                    this.editableTabsValue2 = activeName;
+                    this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+</body>
+
+</html>

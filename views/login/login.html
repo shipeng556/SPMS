@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SPMS登录界面</title>
+  <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+  <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+  <script type="text/javascript" src="../../lib/element/index.js"></script>
+  <style>
+    body {
+      background-image: url("../../image/1.jpg");
+      background-size: cover;
+    }
+    .el-row {
+      margin-bottom: 20px;
+    }
+    .login-box {
+      margin-top: 20%;
+      margin-left: 40%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-box" id="app">
+    <el-row>
+      <el-col :span="10">
+        <el-input id="username" v-model="form.username" placeholder="rms">
+          <template slot="prepend"><i class="el-icon-user-solid"></i></template>
+        </el-input>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="10">
+        <el-input id="password" v-model="form.password" type="password" placeholder="psd">
+          <template slot="prepend">
+            <i class="el-icon-unlock"></i>
+          </template>
+        </el-input>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="10">
+        <div class="el-input el-input-group el-input-group--prepend">
+          <div class="el-input-group__prepend">
+            <i class="el-icon-basketball"></i>
+          </div>
+          <el-select v-model="form.language" placeholder="请选择语言" style="width: 264px;">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="10">
+        <el-button id="login" v-on:click="check" style="width: 100%" type="primary">longin</el-button>
+      </el-col>
+    </el-row>
+  </div>
+</body>
+<script type="text/javascript">
+  var Main = {
+    data() {
+      return {
+        form: {
+          username: '',
+          password: '',
+          language: ''
+        },
+        options: [{
+          label: "EN",
+          value: "1"
+        }, {
+          label: "ZH",
+          value: "2"
+        }]
+      }
+    },
+    methods: {
+      check() {
+        if (this.form.username == "" || this.form.password == "") {
+          this.$message("请输入用户名和密码");
+          return;
+        }
+        window.location.href = "../Index/Index.html";
+      }
+    }
+  }
+  var Ctor = Vue.extend(Main)
+  new Ctor().$mount('#app')
+</script>
+
+</html>

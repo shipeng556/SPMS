@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FTP Manager</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            line-height: 12px;
+            position: relative;
+            bottom: -20px;
+            left: -8px;
+        }
+
+        .el-main {
+            padding: 0 20px 0 20px;
+        }
+
+        .el-table-th {
+            text-align: center;
+        }
+
+        .el-table .cell {
+            width: 110px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div>
+                    <el-row>
+                        <span>EQPType</span>
+                        <el-select v-model="eqpType" style="height: 40px; width: 150px">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                :value="item.value"></el-option>
+                        </el-select>
+                        <span>FTPName</span>
+                        <el-input v-model="ftpName" placeholder="请输入内容" style="height: 40px; width: 150px">
+                        </el-input>
+                        <el-button type="primary" round size="small">Search</el-button>
+                        <el-button type="success" round size="small">Add</el-button>
+                        <el-button type="primary" round size="small">Update</el-button>
+                        <el-button type="danger" round size="small">Delete</el-button>
+                    </el-row>
+                </div>
+            </el-header>
+            <el-main>
+                <div>
+                    <template>
+                        <el-table :data="tabledata">
+                            <el-table-column prop="EQPType" label="EQPType">
+                            </el-table-column>
+                            <el-table-column prop="FTPName" label="FTPName">
+                            </el-table-column>
+                            <el-table-column prop="IPAddress" label="IPAddress">
+                            </el-table-column>
+                            <el-table-column prop="Port" label="Port">
+                            </el-table-column>
+                            <el-table-column prop="UserNmae" label="UserName">
+                            </el-table-column>
+                            <el-table-column prop="RootPath" label="RootPath">
+                            </el-table-column>
+                            <el-table-column prop="Description" label="Description">
+                            </el-table-column>
+                            <el-table-column prop="Operation" label="Operation">
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <template>
+                 
+                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                            :current-page.sync="currentPage" :page-size="100" layout="prev, pager, next, jumper"
+                            :total="1000">
+                        </el-pagination>
+                  
+                </template>
+            </el-main>
+        </el-container>
+    </div>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    eqpType: '',
+                    ftpName: '',
+                    currentPage: 1,
+                    options: [{
+                        value: '选项1',
+                        label: 'OQC'
+                    }, {
+                        value: '选项2',
+                        label: 'IQC'
+                    }, {
+                        value: '选项3',
+                        label: 'ProbeCard'
+                    }, {
+                        value: '选项4',
+                        label: 'Prober'
+                    }],
+                    tabledata: [{
+                        EQPType: '10',
+                        FTPName: 'FTP',
+                        IPAddress: '102.16.1.10',
+                        Port: '21',
+                        UserNmae: 'adminstrator',
+                        RootPath: 'Uploads',
+                        Description: '11',
+                        Operation: 'TestConnect',
+                    }, {
+                        EQPType: '101',
+                        FTPName: 'SFTP',
+                        IPAddress: '10.100.2.2',
+                        Port: '21',
+                        UserNmae: 'adminstrator',
+                        RootPath: 'Uploads',
+                        Description: '11',
+                        Operation: 'TestConnect',
+                    }, {
+                        EQPType: '112',
+                        FTPName: 'FTP',
+                        IPAddress: '102.16.1.10',
+                        Port: '21',
+                        UserNmae: 'adminstrator',
+                        RootPath: 'Uploads',
+                        Description: '11',
+                        Operation: 'TestConnect',
+                    }, {
+                        EQPType: '167',
+                        FTPName: 'FTP',
+                        IPAddress: '102.16.1.10',
+                        Port: '21',
+                        UserNmae: 'adminstrator',
+                        RootPath: 'Uploads',
+                        Description: '11',
+                        Operation: 'TestConnect',
+                    }]
+                }
+            },
+            methods: {
+                handleSizeChange(val) {
+                    console.log(`每页${val}条`);
+                },
+                handleCurrentChange(val) {
+                    console.log(`当前页：${val}`);
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+</body>
+
+</html>

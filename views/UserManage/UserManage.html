@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Manage</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <style>
+        .el-table {
+            width: 100%;
+            margin: 20px 0px 0px 20px;
+            max-height: 450px;
+            border-top: 1px solid#0b93d5;
+        }
+        #app {
+            height: 100%;
+            width: 100%;
+            line-height: 12px;
+        }
+
+        .el-aside {
+            height: 320px;
+            padding: 20px 4px;
+            position: relative;
+            left: 0px;
+            bottom: -80px;
+        }
+
+        .el-button.is-round {
+            border-radius: 20px;
+            padding: 6px 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <div class="custom-tree-container">
+                <el-aside width="120px">
+                    <template>
+                        <el-tree :data="data1" node-key="id" default-expand-all :expand-on-click-node="false"
+                            :render-content="renderContent">
+                        </el-tree>
+                    </template>
+                </el-aside>
+            </div>
+            <el-main>
+                <div>
+                    <el-row>
+                        <span> UserGroup</span>
+                        <el-input placeholder="EnterKeywords" style="height: 40px;width: 150px"></el-input>
+                        <el-button icon="el-icon-search" round>Search</el-button>
+                        <el-button type="success" icon="el-icon-edit" round @click="addUser">Add</el-button>
+                        <el-button icon="el-icon-cloudy" round @click="UpdateUser">Update</el-button>
+                        <el-button type="danger" icon="el-icon-delete" round>Delete</el-button>
+                    </el-row>
+                </div>
+                <template>
+                    <el-table :data="tableData">
+                        <el-table-column prop="name" label="name" width="110">
+                        </el-table-column>
+                        <el-table-column prop="descrpition" label="Description" width="110">
+                        </el-table-column>
+                        <el-table-column prop="Jbos" label="Jbos" width="110">
+                        </el-table-column>
+                        <el-table-column prop="department" label="Department" width="110">
+                        </el-table-column>
+                        <el-table-column prop="telephone" label="Telephone" width="110">
+                        </el-table-column>
+                        <el-table-column prop="Email" label="Email" width="110">
+                            <!-- <template slot-scope="scope">
+                                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                                <el-button type="text" size="small">编辑</el-button>
+                            </template> -->
+                        </el-table-column>
+                        <el-table-column prop="Sex" label="Sex" width="100">
+                        </el-table-column>
+                    </el-table>
+                </template>
+                <template>
+                    <div class="block">
+                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                            :current-page.sync="currentPage" :page-size="100" layout="prev, pager, next, jumper"
+                            :total="1000">
+                        </el-pagination>
+                    </div>
+                </template>
+            </el-main>
+        </el-container>
+    </div>
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <script type="text/javascript" src="../../lib/vue/axio.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script type="text/javascript" src="../../lib/common/spms-common.js"></script>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    currentPage: 1,
+                    tableData: [],
+                    data1: [{
+                        id: 1,
+                        icon: 'el-icon-reading',
+                        label: 'IT',
+                        children: [{
+                            id: 4,
+                            label: '小王',
+                        },
+                        {
+                            id: 9,
+                            label: '小李',
+                        }, {
+                            id: 10,
+                            label: 'User6'
+                        }]
+                    }, {
+                        id: 2,
+                        icon: 'el-icon-reading',
+                        label: 'Test',
+                        children: [{
+                            id: 5,
+                            label: '小张'
+                        }, {
+                            id: 6,
+                            label: 'User2'
+                        }]
+                    }, {
+                        id: 3,
+                        label: 'CP',
+                        icon: 'el-icon-reading',
+                        children: [{
+                            id: 7,
+                            label: 'User3'
+                        }, {
+                            id: 8,
+                            label: 'User4'
+                        }]
+                    }],
+                    defaultProps: {
+                        children: 'children',
+                        label: 'label',
+                        icon: 'icon'
+                    }
+                }
+            },
+            mounted() {
+                var lett = this;
+                axios
+                    .get('http://localhost:60501/api/Users')
+                    .then(function (response) {
+                        lett.tableData = response.data;
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            methods: {
+                renderContent: function (createElement, { node, data, store }) {
+                    return createElement('span', [
+                        createElement('i', {
+                            attrs: {
+                                class: 'el-icon-s-custom'
+                            }
+                        }),
+                        createElement('span', node.label)
+                    ]);
+                },
+                handleClick(row) {
+                    console.log(row);
+                },
+                handleSizeChange(val) {
+                    console.log(`每页 ${val} 条`);
+                },
+                handleCurrentChange(val) {
+                    console.log(`当前页: ${val}`);
+                },
+                addUser() {
+                    window.location.href = "../AddUser/AddUser.html?department=IT&xx=yy";
+                },
+                UpdateUser() {
+                    window.location.href = "../UpdateUser/UpdateUser.html";
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+
+</body>
+
+</html>

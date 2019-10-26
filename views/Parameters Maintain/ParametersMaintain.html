@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Parameters Maintain</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            line-height: 12px;
+            position: relative;
+            bottom: -20px;
+            left: -8px;
+        }
+
+        .el-main {
+            padding: 0 20px 0 20px;
+        }
+
+        .el-table-th {
+            text-align: center;
+        }
+
+        .el-table .cell {
+            width: 110px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div>
+                    <el-row>
+                        <span>EQPtype</span>
+                        <el-select v-model="eqpType" style="height: 40px; width: 150px">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                :value="item.value"></el-option>
+                        </el-select>
+                        <span>ParameterName</span>
+                        <el-input v-model="parameterName" placeholder="Enter keywords"
+                            style="height: 40px; width: 150px">
+                        </el-input>
+                        <el-button type="primary" round size="small">Search</el-button>
+                        <el-button type="success" round size="small">Add</el-button>
+                        <el-button type="primary" round size="small">UPdate</el-button>
+                        <el-button type="danger" round size="small">Delete</el-button>
+                    </el-row>
+                </div>
+            </el-header>
+            <el-main>
+                <div>
+                    <template>
+                        <el-table :data="tabledata">
+                            <el-table-column prop="RecipeParameterName" label="RecipeParameterName">
+                            </el-table-column>
+                            <el-table-column prop="DefaultValue" label="DefaultValue">
+                            </el-table-column>
+                            <el-table-column prop="ValiDataType" label="ValiDataType">
+                            </el-table-column>
+                            <el-table-column prop="DataType" label="DataType">
+                            </el-table-column>
+                            <el-table-column prop="RecipeGroupID" label="RecipeGroupID">
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <template>
+                    <div>
+                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                            :current-page.sync="currentPage" :page-size="100" layout="prev, pager, next, jumper"
+                            :total="1000">
+                        </el-pagination>
+                    </div>
+                </template>
+            </el-main>
+        </el-container>
+    </div>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    eqpType: '',
+                    parameterName: '',
+                    currentPage: 1,
+                    options: [{
+                        value: '选项1',
+                        label: 'IQC'
+                    }, {
+                        value: '选项2',
+                        label: 'CPTester'
+                    }, {
+                        value: '选项3',
+                        label: 'CPProber'
+                    }, {
+                        value: '选项4',
+                        label: 'ProberCard'
+                    }, {
+                        value: '选项5',
+                        label: 'OQC'
+                    }],
+                    tabledata: [{
+                        RecipeParameterName: '1112',
+                        DefaultValue: '1',
+                        ValiDataType: 'Exact',
+                        DataType: 'String',
+                        RecipeGroupID: 'IQC',
+                    }, {
+                        RecipeParameterName: '12',
+                        DefaultValue: '2',
+                        ValiDataType: 'Exact',
+                        DataType: 'String',
+                        RecipeGroupID: 'ProberCard',
+                    }, {
+                        RecipeParameterName: '11',
+                        DefaultValue: '1',
+                        ValiDataType: 'Exact',
+                        DataType: 'String',
+                        RecipeGroupID: 'OQC',
+                    }, {
+                        RecipeParameterName: '10',
+                        DefaultValue: '3',
+                        ValiDataType: 'Exact',
+                        DataType: 'String',
+                        RecipeGroupID: 'CPProber',
+                    }, {
+                        RecipeParameterName: '2',
+                        DefaultValue: '1',
+                        ValiDataType: 'Exact',
+                        DataType: 'String',
+                        RecipeGroupID: 'CPProber',
+                    }]
+                }
+            },
+            methods: {
+                handleSizeChange(val) {
+                    console.log(`每页${val}条`);
+                },
+                handleCurrentChange(val) {
+                    console.log(`当前页：${val}`);
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+
+</body>
+
+</html>

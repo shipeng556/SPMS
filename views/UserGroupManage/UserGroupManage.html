@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UserGroupManage</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <style>
+        .el-table {
+            width: 100%;
+            height: 100%;
+            align: center;
+            margin: 20px 0px 0px 20px;
+            border-top: 1px solid#0b93d5;
+        }
+
+        body {
+            height: 100%;
+            width: 93%;
+            line-height: 12px;
+            position: relative;
+            left: 30px;
+            bottom: -30px;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <el-row>
+                <span> UserGroup</span>
+                <el-input placeholder="EnterKeywords" style="height: 40px;width: 150px"></el-input>
+                <el-button type="primary" icon="el-icon-search" size="small" round>Search</el-button>
+                <el-button type="success" size="small" icon="el-icon-edit" round @click="addUser">Add</el-button>
+                <el-button type="primary" icon="el-icon-cloudy" size="small" round @click="UpdateUser">Update</el-button>
+                <el-button type="danger" size="small" icon="el-icon-delete" round>Delete</el-button>
+            </el-row>
+            <template>
+                <el-table :data="tabledata"  style="width: 100%">
+                    <el-table-column prop="name" label="name">
+                    </el-table-column>
+                    <el-table-column prop="Description" label="Description">
+                    </el-table-column>
+                </el-table>
+            </template>
+        </div>
+        </div>
+        <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+       <script type="text/javascript" src="../../lib/element/index.js"></script>
+        <script>
+            var Main = {
+                data() {
+                    return {
+                        tabledata: [{
+                            id: '1',
+                            name: 'Admin',
+                            Description: 'Admin',
+                        }, {
+                            id: '2',
+                            name: 'B',
+                            Description: 'B',
+                        }, {
+                            id: '3',
+                            name: 'C',
+                            Description: 'C',
+                        }, {
+                            id: '4',
+                            name: 'name',
+                            Description: 'Description'
+                        }],
+                    }
+                },
+                methods: {
+                    addUser() {
+                        window.location.href = "../AddUser/AddUser.html";
+                    },
+                    UpdateUser() {
+                        window.location.href = "../UpdateUser/UpdateUser.html";
+                    }
+                }
+            }
+            var Ctor = Vue.extend(Main)
+            new Ctor().$mount('#app')
+        </script>
+
+
+</body>
+
+</html>

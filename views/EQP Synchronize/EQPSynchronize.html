@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EQP Synchronize</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            align: center;
+            line-height: 12px;
+            position: relative;
+            bottom: -20px;
+            left: -8px;
+        }
+
+        .el-main {
+            padding: 0 50px 0 60px;
+        }
+
+        .el-table-th {
+            text-align: center;
+        }
+
+        .el-table .cell {
+            width: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div>
+                    <el-row>
+                        <span>EQPType</span>
+                        <el-select v-model="eqpType" style="height: 40px;width: 150px">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <span>EQPType</span>
+                        <el-input v-model="eqpName" placeholder="请输入内容" style="height: 40px;width: 150px">
+                        </el-input>
+                        <el-button type="primary" round size="small">Search</el-button>
+                        <el-button type="primary" round size="small">EQP Synchronize</el-button>
+                    </el-row>
+                </div>
+            </el-header>
+            <el-main>
+                <div>
+                    <template>
+                        <el-table :data="tabeldate">
+                            <el-table-column prop="EQPName" label="EQPName" width="220">
+                            </el-table-column>
+                            <el-table-column prop="Location" label="Location" width="220">
+                            </el-table-column>
+                            <el-table-column prop="EQPType" label="EQPType" width="220">
+                            </el-table-column>
+                            <el-table-column prop="EQPTypeDetail" label="EQPTypeDetail" width="220">
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+                <template>
+                    <div class="block">
+                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                            :current-page.sync="currentPage" :page-size="100"
+                            layout=" prev, pager, next,jumper" :total="500">
+                        </el-pagination>
+                    </div>
+                </template>
+            </el-main>
+        </el-container>
+    </div>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    currentPage: 1,
+                    eqpName: '',
+                    eqpType: '',
+                    options: [{
+                        value: '选项1',
+                        label: 'OQC'
+                    }, {
+                        value: '选项2',
+                        label: 'IQC'
+                    }, {
+                        value: '选项3',
+                        label: 'ProbeCard'
+                    }, {
+                        value: '选项4',
+                        label: 'Prober'
+                    }],
+                    tabeldate: [{
+                        EQPName: '5087A-02-25-VA',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'a',
+                    }, {
+                        EQPName: '5087A-02-25-VB',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'b',
+                    }, {
+                        EQPName: '5087A-02-25-VC',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'c',
+                    }, {
+                        EQPName: '5087A-02-25-VD',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'd',
+                    }, {
+                        EQPName: '5087A-02-25-VA',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'a',
+                    }, {
+                        EQPName: '5087A-02-25-VB',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'b',
+                    }, {
+                        EQPName: '5087A-02-25-VC',
+                        Location: 'PBarea',
+                        EQPType: 'ProbeCard',
+                        EQPTypeDetail: 'c',
+                    }],
+                }
+            },
+            methods: {
+                handleSizeChange(val) {
+                    console.log(`每页 ${val} 条`);
+                },
+                handleCurrentChange(val) {
+                    console.log(`当前页: ${val}`);
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+
+    </script>
+</body>
+
+</html>

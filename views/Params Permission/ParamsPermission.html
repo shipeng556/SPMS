@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Params Permission</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <style>
+        #app {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div>
+                    <span>ProductID</span>
+                    <el-select v-model="productId" style="height: 40px;width: 150px;">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <el-button type="primary" round size="small">Submit</el-button>
+                </div>
+            </el-header>
+            <el-container>
+                <el-aside width="800px">
+                    <el-tabs v-model="editableTabsValue" type="card">
+                        <el-tab-pane v-for="(item, index) in editableTabs" :key="item.name"
+                            :label="item.title" :name="item.name">
+                            <!-- {{item.content}} -->
+                            <template>
+                                <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark"
+                                    style="width: 100%" @selection-change="handleSelectionChange">
+                                    <el-table-column type="selection" width="100">
+                                    </el-table-column>
+                                    <el-table-column prop="ParameterName" label="ParameterName">
+                                    </el-table-column>
+                                    <el-table-column prop="UserGroup" label="UserGroup">
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                        </el-tab-pane>
+                    </el-tabs>
+                </el-aside>
+                <el-main style="width: 300px;">
+                    <div>
+                        <el-row>
+                            <span>UserGroupList</span>
+                            <el-button type="primary" round size="small">Affirm</el-button>
+                        </el-row>
+                            <el-checkbox-group v-model="type" style="border-left: 1px">
+                                <el-checkbox label="Group5" name="type"></el-checkbox><br>
+                                <el-checkbox label="group1" name="type"></el-checkbox><br>
+                                <el-checkbox label="yyy" name="type"></el-checkbox><br>
+                                <el-checkbox label="group2" name="type"></el-checkbox><br>
+                                <el-checkbox label="group3" name="type"></el-checkbox><br>
+                                <el-checkbox label="group4" name="type"></el-checkbox><br>
+                            </el-checkbox-group>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    productId: '',
+                    type: [],
+                    editableTabsValue: 'CPProber',
+                    multipleSelection: [],
+                    options: [{
+                        value: '选项1',
+                        label: 'A'
+                    }, {
+                        value: '选项2',
+                        label: 'B'
+                    }, {
+                        value: '选项3',
+                        label: 'C'
+                    }],
+                    tableData: [{
+                        ParameterName: 'FLATNESS',
+                        UserGroup: 'Group2',
+                    }, {
+                        ParameterName: 'FLATNESS',
+                        UserGroup: 'Group2',
+                    }],
+                    editableTabs: [{
+                        title: 'CPProber',
+                        name: 'CPProber',
+                        url: '',
+                        content: 'Tab 1 content'
+                    }, {
+                        title: 'CPTester',
+                        name: 'CPTester',
+                        url: '',
+                        content: 'Tab 2 content'
+                    }, {
+                        title: 'IQC',
+                        name: 'IQC',
+                        url: '',
+                        content: 'Tab 3 content'
+                    }, {
+                        title: 'OQC',
+                        name: 'OQC',
+                        url: '',
+                        content: 'Tab 4 content'
+                    }, {
+                        title: 'ProberCard',
+                        name: 'ProberCard',
+                        url: '',
+                        content: 'Tab 5 content'
+                    }],
+
+                }
+            },
+            methods: {
+                handleSelectionChange(val) {
+                    this.multipleSelection = val;
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+
+</body>
+
+</html>

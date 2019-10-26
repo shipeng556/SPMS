@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Authority View</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <style>
+              .el-table{
+                line-height: 15px;
+                padding-left: 40px !important;
+              }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div style="height: 40px;padding: 20px;">
+            <template>
+                <span>Authority：</span>
+                <el-select v-model="value">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+            </template>
+        </div>
+        <template>
+            <div>
+                <el-table :data="tableData1" style="width: 100%;margin-bottom: 20px;" row-key="id" default-expand-all
+                    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+                    <el-table-column prop="Target" label="Target" sortable>
+                    </el-table-column>
+                    <el-table-column prop="MenuName" label="MenuName" sortable>
+                    </el-table-column>
+                    <el-table-column prop="Url" label="MenuUrl" sortable>
+                    </el-table-column>
+                </el-table>
+            </div>
+        </template>
+    </div>
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    value: '',
+                    options: [{
+                        value: '选项1',
+                        label: 'ALL'
+                    }, {
+                        value: '选项2',
+                        label: 'Normal'
+                    }, {
+                        value: '选项3',
+                        label: 'Supervisor'
+                    }, {
+                        value: '选项4',
+                        label: 'Dispatcher'
+                    }],
+                    tableData1: [{
+                        id: 1,
+                        Target: 'Group Management',
+                        MenuName: 'Authority View',
+                        Url: '/AuthorityView',
+                    }, {
+                        id: 2,
+                        Target: 'Maintain',
+                        children: [{
+                            id: 21,
+                            Target: 'MainMenu',
+                            MenuName: 'Authority',
+                            Url: '/AuthorityView',
+                        }, {
+                            id: 22,
+                            Target: 'MainMenu',
+                            MenuName: 'Authori',
+                            Url: '/A../',
+                        }, {
+                            id: 23,
+                            Target: 'MainMenu',
+                            MenuName: 'Author View',
+                            Url: '/A../',
+                        }]
+                    }, {
+                        id: 3,
+                        Target: 'Recipe Management',
+
+                        children: [{
+                            id: 31,
+                            Target: 'MainMenu',
+                            MenuName: 'Authority View',
+                            Url: '/A../',
+                        }, {
+                            id: 32,
+                            Target: 'MainMenu',
+                            MenuName: 'Authority View',
+                            Url: '/A../',
+                        }, {
+                            id: 33,
+                            Target: 'WaferMap',
+                            MenuName: 'Authority View',
+                            Url: '/A../',
+                        }]
+                    }, {
+                        id: 4,
+                        Target: 'WaferMap',
+                        MenuName: 'Authority ',
+                        Url: '/A../',
+                    }, {
+                        id: 5,
+                        Target: 'History',
+                        MenuName: 'Authority',
+                        Url: '/A../',
+                    }, {
+                        id: 6,
+                        Target: 'Help',
+                        MenuName: 'Authority View',
+                        Url: '/A../',
+                    }],
+
+                }
+            },
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+</body>
+
+</html>

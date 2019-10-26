@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AssignDispatcher</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <style>
+        .transfer-footer {
+            margin-left: 20px;
+            padding: 6px 5px;
+        }
+        #app {
+            height: 100%;
+            width: 600px;
+            line-height: 14px;
+            position: relative;
+            left: 120px;
+            bottom: 10px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <template>
+            <div style="text-align: left;height: 60px;padding:20px;">
+                <p>AssignDispatcher</p>
+                <el-button style=" position: relative;left: 400px; bottom: 30px;" type="primary">Submit</el-button>
+            </div>
+            <div style="text-align: left">
+                <el-transfer style="text-align: left; display: inline-block" v-model="value" filterable
+                    :left-default-checked="[2, 3]" :right-default-checked="[1]" :titles="['Normal', 'Dispatcher']"
+                    :button-texts="['到左边', '到右边']" 
+                    :format="{
+                        noChecked: '${total}',
+                        hasChecked: '${checked}/${total}'
+                      }" @change="handleChange" :data="data">
+                    <!-- <span slot-scope="{ option }">{{ option.key }} - {{ option.label }}</span> -->
+                    <el-button class="transfer-footer" slot="left-footer" size="small">操作</el-button>
+                    <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button>
+                </el-transfer>
+            </div>
+        </template>
+    </div>
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <script>
+        var Main = {
+            data() {
+                const generateData = _ => {
+                    const data = [];
+                    for (let i = 1; i <= 50; i++) {
+                        data.push({
+                            key: i,
+                            label: `User ${i}`,
+                            disabled: i % 4 === 0
+                        });
+                    }
+                    return data;
+                };
+                return {
+                    data: generateData(),
+                    value: [1],
+                };
+            },
+
+            methods: {
+                handleChange(value, direction, movedKeys) {
+                    console.log(value, direction, movedKeys);
+                }
+            }
+        };
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+
+    </script>
+</body>
+
+</html>

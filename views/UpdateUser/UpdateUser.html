@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../lib/element/theme-chalk/index.css" type="text/css">
+    <style>
+        body {
+            width: 600px;
+            height: 90%;
+            line-height: 200px;
+            position: relative;
+            left: 30px;
+            bottom: -30px;
+        }
+        html {
+            width: 600px;
+            height: 100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-form ref="form" :model="form" label-width="120px">
+            <el-form-item label="UserID" prop="Name">
+                <el-input v-model="form.name" placeholder="Name" style="width: 225px"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Description" prop="Description">
+                <el-input v-model="form.Description" placeholder="Description" style="width: 225px"></el-input>
+            </el-form-item>
+            <el-form-item label="Department" prop="Department">
+                <el-select v-model="form.Department" placeholder="请选择部门">
+                    <el-option label="IT" value="IT"></el-option>
+                    <el-option label="Test" value="Test"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="Telephone" prop="Telephone">
+                <el-input v-model="form.Telephone" placeholder="Telephone" style="width: 225px"></el-input>
+            </el-form-item>
+            <el-form-item label="Jbos" prop="Jbos">
+                <el-input v-model="form.Jbos" placeholder="Jbos" style="width: 225px"></el-input>
+            </el-form-item>
+            <el-form-item label="Email" prop="Email">
+                <el-input v-model="form.Email" placeholder="Email" style="width: 225px"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">Commit</el-button>
+                <el-button type="danger" @click="Cancel">Cancel</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+    
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../../lib/element/index.js"></script>
+    <script type="text/javascript" src="../../lib/common/spms-common.js"></script>
+    <script>
+        var Main = {
+            data() {
+                return {
+                    form: {
+                        UserID: '',
+                        Description: '',
+                        Department: '',
+                        Telephone: '',
+                        Jbos: '',
+                        Email: '',
+                    }
+                }
+            },
+            
+            methods: {
+                onSubmit() {
+                    console.log('submit!');
+                },
+                Cancel() {
+                    window.history.go(-1);
+                }
+            }
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
+    </script>
+</body>
+
+</html>
